@@ -12,7 +12,7 @@ class MessageHandler(object):
         raise AttributeError
 
     @abstractmethod
-    def execute(self, query):
+    def execute(self, message):
         raise NotImplementedError
 
 

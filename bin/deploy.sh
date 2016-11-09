@@ -12,7 +12,7 @@ linkenv venv/lib/python2.7/site-packages libs
 
 echo "==== Deploying app to App Engine ===="
 
-appcfg.py update api.yaml --no_cookies
+appcfg.py update api.yaml --no_cookies --env_variable=env:staging
 appcfg.py update_dispatch . --no_cookies
 
 bash bin/dev.sh
