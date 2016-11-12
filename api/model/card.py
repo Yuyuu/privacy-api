@@ -15,7 +15,7 @@ class Card(object):
         self.black = black
 
     def serialize(self):
-        return {'_id': str(self.uuid), 'yellow': self.yellow.serialize(), 'pink': self.pink.serialize(),
+        return {'yellow': self.yellow.serialize(), 'pink': self.pink.serialize(),
                 'green': self.green.serialize(), 'red': self.red.serialize(), 'blue': self.blue.serialize(),
                 'black': self.black.serialize()}
 

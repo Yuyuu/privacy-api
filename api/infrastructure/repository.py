@@ -3,7 +3,7 @@ __author__ = 'Vincent Tertre'
 
 from abc import ABCMeta, abstractmethod
 
-from api.model.factories import CardFactory
+from google.cloud import datastore
 
 
 class RepositoryLocator(object):
@@ -24,17 +24,19 @@ class RepositoryLocator(object):
         pass
 
 
-class MongoRepositoryLocator(RepositoryLocator):
-    def __init__(self, db):
-        self.db = db
+class DatastoreRepositoryLocator(RepositoryLocator):
+    def __init__(self, client):
+        self.client = client
 
     def get_cards(self):
-        return CardRepository(self.db['card'])
+        return CardRepository(self.client.key('Card'))
 
 
 class CardRepository(object):
-    def __init__(self, collection):
-        self.collection = collection
+    def __init__(self, key):
+        self.key = key
 
     def add(self, card):
-        self.collection.insert(card.serialize())
+        completed_key = self.key.completed_key(str(card.uuid))
+        entity = datastore.Entity(key=completed_key)
+        entity.update(card.serialize())

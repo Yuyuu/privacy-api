@@ -4,10 +4,10 @@ __author__ = 'Vincent Tertre'
 import logging
 import sys
 
-import pymongo
 from flask_injector import FlaskInjector
+from google.cloud import datastore
 
-from configuration import logging_configuration, db_configuration
+from configuration import logging_configuration, meta_configuration
 from privacy_application import PrivacyApplication
 from server import Server
 
@@ -22,14 +22,8 @@ def create_log_handler():
     return handler
 
 
-def get_database():
-    host = db_configuration.get('host', 'localhost')
-    port = db_configuration.get('port', 27017)
-    try:
-        return pymongo.MongoClient(host, port)['privacy']
-    except (pymongo.errors.ConnectionFailure, pymongo.errors.AutoReconnect):
-        logger.exception('mongo database could not be started on mongodb://{0}:{1}/'.format(host, port))
-        sys.exit(0)
+def get_client():
+    return datastore.Client(meta_configuration['projectId'])
 
 
 log_handler = create_log_handler()
@@ -37,7 +31,7 @@ root_logger = logging.getLogger()
 root_logger.setLevel(log_handler.level)
 root_logger.addHandler(log_handler)
 
-application = PrivacyApplication(get_database())
+application = PrivacyApplication(get_client())
 server = Server(application)
 server.flask.logger.addHandler(log_handler)
 
