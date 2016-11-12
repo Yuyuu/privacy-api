@@ -25,7 +25,7 @@ class CreateCard(Resource):
     def command():
         return CreateCardCommand(
             yellow=request.json['yellow'],
-            purple=request.json['purple'],
+            pink=request.json['pink'],
             green=request.json['green'],
             red=request.json['red'],
             blue=request.json['blue'],

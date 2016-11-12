@@ -5,17 +5,17 @@ from uuid import uuid4
 
 
 class Card(object):
-    def __init__(self, yellow, purple, green, red, blue, black, uuid=None):
+    def __init__(self, yellow, pink, green, red, blue, black, uuid=None):
         self.uuid = uuid or uuid4()
         self.yellow = yellow
-        self.purple = purple
+        self.pink = pink
         self.green = green
         self.red = red
         self.blue = blue
         self.black = black
 
     def serialize(self):
-        return {'_id': str(self.uuid), 'yellow': self.yellow.serialize(), 'purple': self.purple.serialize(),
+        return {'_id': str(self.uuid), 'yellow': self.yellow.serialize(), 'pink': self.pink.serialize(),
                 'green': self.green.serialize(), 'red': self.red.serialize(), 'blue': self.blue.serialize(),
                 'black': self.black.serialize()}
 

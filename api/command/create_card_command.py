@@ -8,9 +8,9 @@ from validators import CommandValidator, ValidateBeforeWith
 
 
 class CreateCardCommand(object):
-    def __init__(self, yellow, purple, green, red, blue, black):
+    def __init__(self, yellow, pink, green, red, blue, black):
         self.yellow = yellow
-        self.purple = purple
+        self.pink = pink
         self.green = green
         self.red = red
         self.blue = blue
@@ -22,8 +22,8 @@ class CreateCardCommandValidator(CommandValidator):
         violations = []
         if not command.yellow:
             violations.append('MISSING_YELLOW_QUESTION')
-        if not command.purple:
-            violations.append('MISSING_PURPLE_QUESTION')
+        if not command.pink:
+            violations.append('MISSING_PINK_QUESTION')
         if not command.green:
             violations.append('MISSING_GREEN_QUESTION')
         if not command.red:
@@ -44,7 +44,7 @@ class CreateCardCommandHandler(CommandHandler):
     def execute(self, command):
         card = Card(
             yellow=Question(command.yellow),
-            purple=Question(command.purple),
+            pink=Question(command.pink),
             green=Question(command.green),
             red=Question(command.red),
             blue=Question(command.blue),
