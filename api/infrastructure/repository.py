@@ -32,17 +32,17 @@ class DatastoreRepositoryLocator(RepositoryLocator):
         return CardRepository()
 
 
-class QuestionEntityModel(ndb.Model):
+class QuestionEntity(ndb.Model):
     title = ndb.StringProperty(required=True, indexed=False)
 
 
-class CardEntityModel(ndb.Model):
-    yellow = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
-    pink = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
-    green = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
-    red = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
-    blue = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
-    black = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
+class CardEntity(ndb.Model):
+    yellow = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
+    pink = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
+    green = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
+    red = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
+    blue = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
+    black = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
 
 
 class CardRepository(object):
@@ -55,9 +55,9 @@ class CardRepository(object):
 
     @staticmethod
     def _get_datastore_model(card):
-        return CardEntityModel(
+        return CardEntity(
             id=str(card.uuid),
-            yellow=QuestionEntityModel(title=card.yellow.title), pink=QuestionEntityModel(title=card.pink.title),
-            green=QuestionEntityModel(title=card.green.title), red=QuestionEntityModel(title=card.red.title),
-            blue=QuestionEntityModel(title=card.blue.title), black=QuestionEntityModel(title=card.black.title)
+            yellow=QuestionEntity(title=card.yellow.title), pink=QuestionEntity(title=card.pink.title),
+            green=QuestionEntity(title=card.green.title), red=QuestionEntity(title=card.red.title),
+            blue=QuestionEntity(title=card.blue.title), black=QuestionEntity(title=card.black.title)
         )
