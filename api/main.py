@@ -5,9 +5,8 @@ import logging
 import sys
 
 from flask_injector import FlaskInjector
-from google.cloud import datastore
 
-from configuration import logging_configuration, meta_configuration
+from configuration import logging_configuration
 from privacy_application import PrivacyApplication
 from server import Server
 
@@ -22,16 +21,12 @@ def create_log_handler():
     return handler
 
 
-def get_client():
-    return datastore.Client(meta_configuration['projectId'])
-
-
 log_handler = create_log_handler()
 root_logger = logging.getLogger()
 root_logger.setLevel(log_handler.level)
 root_logger.addHandler(log_handler)
 
-application = PrivacyApplication(get_client())
+application = PrivacyApplication()
 server = Server(application)
 server.flask.logger.addHandler(log_handler)
 

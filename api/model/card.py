@@ -14,11 +14,6 @@ class Card(object):
         self.blue = blue
         self.black = black
 
-    def serialize(self):
-        return {'yellow': self.yellow.serialize(), 'pink': self.pink.serialize(),
-                'green': self.green.serialize(), 'red': self.red.serialize(), 'blue': self.blue.serialize(),
-                'black': self.black.serialize()}
-
 
 class Question(object):
     def __init__(self, title):

@@ -7,9 +7,9 @@ from resource.create_card import CreateCard
 
 
 class PrivacyApplication(object):
-    def __init__(self, client):
+    def __init__(self):
         self.injector = create_injector()
-        RepositoryLocator.initialize(DatastoreRepositoryLocator(client))
+        RepositoryLocator.initialize(DatastoreRepositoryLocator())
 
     @staticmethod
     def routes():

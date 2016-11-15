@@ -3,7 +3,7 @@ __author__ = 'Vincent Tertre'
 
 from abc import ABCMeta, abstractmethod
 
-from google.cloud import datastore
+from google.appengine.ext import ndb
 
 
 class RepositoryLocator(object):
@@ -25,18 +25,39 @@ class RepositoryLocator(object):
 
 
 class DatastoreRepositoryLocator(RepositoryLocator):
-    def __init__(self, client):
-        self.client = client
+    def __init__(self):
+        pass
 
     def get_cards(self):
-        return CardRepository(self.client.key('Card'))
+        return CardRepository()
+
+
+class QuestionEntityModel(ndb.Model):
+    title = ndb.StringProperty(required=True, indexed=False)
+
+
+class CardEntityModel(ndb.Model):
+    yellow = ndb.StructuredProperty(QuestionEntityModel, required=True)
+    pink = ndb.StructuredProperty(QuestionEntityModel, required=True)
+    green = ndb.StructuredProperty(QuestionEntityModel, required=True)
+    red = ndb.StructuredProperty(QuestionEntityModel, required=True)
+    blue = ndb.StructuredProperty(QuestionEntityModel, required=True)
+    black = ndb.StructuredProperty(QuestionEntityModel, required=True)
 
 
 class CardRepository(object):
-    def __init__(self, key):
-        self.key = key
+    def __init__(self):
+        pass
 
     def add(self, card):
-        completed_key = self.key.completed_key(str(card.uuid))
-        entity = datastore.Entity(key=completed_key)
-        entity.update(card.serialize())
+        entity = self._get_datastore_model(card)
+        entity.put()
+
+    @staticmethod
+    def _get_datastore_model(card):
+        return CardEntityModel(
+            id=str(card.uuid),
+            yellow=QuestionEntityModel(title=card.yellow.title), pink=QuestionEntityModel(title=card.pink.title),
+            green=QuestionEntityModel(title=card.green.title), red=QuestionEntityModel(title=card.red.title),
+            blue=QuestionEntityModel(title=card.blue.title), black=QuestionEntityModel(title=card.black.title)
+        )
