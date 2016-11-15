@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vincent Tertre'
 
+import random
 from abc import ABCMeta, abstractmethod
 
 from google.appengine.ext import ndb
@@ -43,6 +44,7 @@ class CardEntity(ndb.Model):
     red = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
     blue = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
     black = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
+    randomizer = ndb.FloatProperty()
 
 
 class CardRepository(object):
@@ -56,7 +58,7 @@ class CardRepository(object):
     @staticmethod
     def _get_datastore_model(card):
         return CardEntity(
-            id=str(card.uuid),
+            id=str(card.uuid), randomizer=random.random(),
             yellow=QuestionEntity(title=card.yellow.title), pink=QuestionEntity(title=card.pink.title),
             green=QuestionEntity(title=card.green.title), red=QuestionEntity(title=card.red.title),
             blue=QuestionEntity(title=card.blue.title), black=QuestionEntity(title=card.black.title)
