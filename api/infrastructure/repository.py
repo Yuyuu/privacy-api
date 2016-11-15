@@ -44,7 +44,7 @@ class CardEntity(ndb.Model):
     red = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
     blue = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
     black = ndb.StructuredProperty(QuestionEntity, required=True, indexed=False)
-    randomizer = ndb.FloatProperty()
+    randomizer = ndb.FloatProperty(required=True, indexed=True)
 
 
 class CardRepository(object):
