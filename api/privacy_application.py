@@ -20,5 +20,5 @@ class PrivacyApplication(object):
 
 class Route(object):
     def __init__(self, uri, resource):
-        self.uri = uri
+        self.uri = '/api' + uri
         self.resource = resource
