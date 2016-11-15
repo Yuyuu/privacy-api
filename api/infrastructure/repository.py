@@ -37,12 +37,12 @@ class QuestionEntityModel(ndb.Model):
 
 
 class CardEntityModel(ndb.Model):
-    yellow = ndb.StructuredProperty(QuestionEntityModel, required=True)
-    pink = ndb.StructuredProperty(QuestionEntityModel, required=True)
-    green = ndb.StructuredProperty(QuestionEntityModel, required=True)
-    red = ndb.StructuredProperty(QuestionEntityModel, required=True)
-    blue = ndb.StructuredProperty(QuestionEntityModel, required=True)
-    black = ndb.StructuredProperty(QuestionEntityModel, required=True)
+    yellow = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
+    pink = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
+    green = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
+    red = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
+    blue = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
+    black = ndb.StructuredProperty(QuestionEntityModel, required=True, indexed=False)
 
 
 class CardRepository(object):
