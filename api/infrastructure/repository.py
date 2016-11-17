@@ -6,6 +6,8 @@ from abc import ABCMeta, abstractmethod
 
 from google.appengine.ext import ndb
 
+from api.factories import CardFactory
+
 
 class RepositoryLocator(object):
     __metaclass__ = ABCMeta
@@ -54,6 +56,13 @@ class CardRepository(object):
     def add(self, card):
         entity = self._get_datastore_model(card)
         entity.put()
+
+    def get_random(self):
+        randomizer = random.random()
+        entity = CardEntity.query().order(CardEntity.randomizer).filter(CardEntity.randomizer >= randomizer).get()
+        if entity is None:
+            entity = CardEntity.query().order(CardEntity.randomizer).get()
+        return CardFactory.create_card(entity)
 
     @staticmethod
     def _get_datastore_model(card):

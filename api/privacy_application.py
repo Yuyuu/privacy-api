@@ -4,6 +4,7 @@ __author__ = 'Vincent Tertre'
 from infrastructure.repository import RepositoryLocator, DatastoreRepositoryLocator
 from injection_configuration import create_injector
 from resource.create_card import CreateCard
+from resource.get_random_card import GetRandomCard
 
 
 class PrivacyApplication(object):
@@ -14,7 +15,8 @@ class PrivacyApplication(object):
     @staticmethod
     def routes():
         return [
-            Route('/cards', CreateCard)
+            Route('/cards', CreateCard),
+            Route('/cards', GetRandomCard)
         ]
 
 
