@@ -67,8 +67,8 @@ class CardRepository(object):
     @staticmethod
     def _get_datastore_model(card):
         return CardEntity(
-            id=str(card.uuid), randomizer=random.random(),
-            yellow=QuestionEntity(title=card.yellow.title), pink=QuestionEntity(title=card.pink.title),
-            green=QuestionEntity(title=card.green.title), red=QuestionEntity(title=card.red.title),
-            blue=QuestionEntity(title=card.blue.title), black=QuestionEntity(title=card.black.title)
+            id=str(card.uuid), randomizer=random.random(), yellow=QuestionEntity(title=card.yellow.title),
+            pink=QuestionEntity(title=card.pink.title), green=QuestionEntity(title=card.green.title),
+            red=QuestionEntity(title=card.red.title), blue=QuestionEntity(title=card.blue.title),
+            black=QuestionEntity(title=card.black.title)
         )

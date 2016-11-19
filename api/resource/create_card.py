@@ -15,19 +15,23 @@ class CreateCard(Resource):
         self.command_bus = command_bus
 
     def post(self):
-        command = self.command()
+        command = self._command()
         result = self.command_bus.send_and_wait_response(command)
         if result.is_error():
             return {'errors': result.error.messages}, result.error.status_code
         return {'id': str(result.response)}, 201
 
     @staticmethod
-    def command():
+    def _command():
         return CreateCardCommand(
-            yellow=request.json['yellow'],
-            pink=request.json['pink'],
-            green=request.json['green'],
-            red=request.json['red'],
-            blue=request.json['blue'],
-            black=request.json['black']
+            yellow=CreateCard._from_request(u'yellow'),
+            pink=CreateCard._from_request(u'pink'),
+            green=CreateCard._from_request(u'green'),
+            red=CreateCard._from_request(u'red'),
+            blue=CreateCard._from_request(u'blue'),
+            black=CreateCard._from_request(u'black')
         )
+
+    @staticmethod
+    def _from_request(key):
+        return request.json.get(key, u'')

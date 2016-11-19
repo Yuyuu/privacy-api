@@ -43,12 +43,8 @@ class CreateCardCommandHandler(CommandHandler):
     @ValidateBeforeWith(CreateCardCommandValidator())
     def execute(self, command):
         card = Card(
-            yellow=Question(command.yellow),
-            pink=Question(command.pink),
-            green=Question(command.green),
-            red=Question(command.red),
-            blue=Question(command.blue),
-            black=Question(command.black),
+            yellow=Question(command.yellow), pink=Question(command.pink), green=Question(command.green),
+            red=Question(command.red), blue=Question(command.blue), black=Question(command.black)
         )
         RepositoryLocator.cards().add(card)
         return card.uuid
