@@ -5,6 +5,7 @@ from infrastructure.repository import RepositoryLocator, DatastoreRepositoryLoca
 from injection_configuration import create_injector
 from resource.create_card import CreateCard
 from resource.get_random_card import GetRandomCard
+from resource.check_app_started import CheckAppStarted
 
 
 class PrivacyApplication(object):
@@ -15,12 +16,19 @@ class PrivacyApplication(object):
     @staticmethod
     def routes():
         return [
-            Route('/cards', CreateCard),
-            Route('/cards', GetRandomCard)
+            Route('/_ah/start', CheckAppStarted),
+            ApiRoute('/cards', CreateCard),
+            ApiRoute('/cards', GetRandomCard)
         ]
 
 
 class Route(object):
+    def __init__(self, uri, resource):
+        self.uri = uri
+        self.resource = resource
+
+
+class ApiRoute(object):
     def __init__(self, uri, resource):
         self.uri = '/api' + uri
         self.resource = resource
