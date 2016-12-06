@@ -22,19 +22,19 @@ class InjectionModule(Module):
         self._configure_queries(binder)
 
     def _configure_commands(self, binder):
-        command_handlers = []
-        implementations = find_implementations_of(CommandHandler)
-        for implementation in implementations:
-            logger.debug('Found implementation for %s: %s', CommandHandler.__name__, implementation.__name__)
-            command_handlers.append(self.__injector__.get(implementation))
+        command_handlers = self._implementations_of(CommandHandler)
         binder.multibind(CommandHandlers, to=command_handlers, scope=singleton)
         binder.bind(CommandBus, scope=singleton)
 
     def _configure_queries(self, binder):
-        query_handlers = []
-        implementations = find_implementations_of(QueryHandler)
-        for implementation in implementations:
-            logger.debug('Found implementation for %s: %s', QueryHandler.__name__, implementation.__name__)
-            query_handlers.append(self.__injector__.get(implementation))
+        query_handlers = self._implementations_of(QueryHandler)
         binder.multibind(QueryHandlers, to=query_handlers, scope=singleton)
         binder.bind(QueryBus, scope=singleton)
+
+    def _implementations_of(self, clazz):
+        query_handlers = []
+        implementations = find_implementations_of(clazz)
+        for implementation in implementations:
+            logger.debug('Found implementation for %s => %s', clazz.__name__, implementation.__name__)
+            query_handlers.append(self.__injector__.get(implementation))
+        return query_handlers
